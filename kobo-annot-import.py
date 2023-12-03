@@ -39,6 +39,9 @@ for line in sys.stdin:
     # Process each line (you can replace this with your processing logic)
     annot_file = line.strip()
 
+    # Print to stdout files in process
+    print(annot_file)
+
     annot_file_complete_name = os.path.join(annot_folder, annot_file)
 
     # Create the individual annotation markdown files ny parsing the xml
