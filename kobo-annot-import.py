@@ -28,6 +28,7 @@ def write_md_file(filename, uuid, title, author, content_text, target_text):
             file.write(f'''book-title: "{title}"\n''')
             file.write(f'''book-author: "{author}"\n''')
             file.write(f'''title: "{content_text}"\n\n''')
+            file.write(f"category: \n")
             file.write(f"tags: []\n")
             file.write(f"---\n")
             file.write(f"# {content_text}\n\n")
