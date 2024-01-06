@@ -23,7 +23,7 @@ annot_folder = '' # replace with annotation local folder
 folder_name = 'result' # replace with target folder
 ```
 
-It will check whether same markdown with the name `UUID-example.md` exists and prevent from overwriting it, assuming the one on the laptop has already been modified. It will then append to `UUID-example (1).md` if content doesn't match newer annotation.
+It will check whether same markdown with the name `Some-Annotation-Text-as-Title-example.md` exists and prevent from overwriting it, assuming the one on the laptop has already been modified. It will then append to `Some-Annotation-Text-as-Title-example (1).md` if content doesn't match newer annotation.
 
 
 This is a *work in progress*. Always backup properly if not sure on result.
