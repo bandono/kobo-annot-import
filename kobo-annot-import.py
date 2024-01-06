@@ -1,8 +1,12 @@
+# v2.0
+# major change to use title as filename instead of UUID
+
 import sys
 import os
 import re
 import hashlib
 import xml.etree.ElementTree as ET
+import frontmatter
 
 # Initiate annotation input file
 annot_file = ''
@@ -34,6 +38,15 @@ def write_md_file(filename, uuid, title, author, content_text, target_text):
             file.write(f"# {content_text}\n\n")
             file.write(f"{target_text}\n\n\n")   
             file.write(f"UUID: `{uuid}`\n\n")
+
+def sanitize_filename(filename):
+    # Define a regular expression pattern to match illegal characters
+    illegal_chars = re.compile(r'[\\/:*?"<>|\']')
+
+    # Remove illegal characters from the filename
+    sanitized_filename = re.sub(illegal_chars, '', filename)
+
+    return sanitized_filename
 
 # Read input line by line
 for line in sys.stdin:
@@ -83,10 +96,11 @@ for line in sys.stdin:
             content_text_element = annotation.find(".//xmlns:content/xmlns:text", namespaces=namespaces)
             if content_text_element is not None:
                 content_text = content_text_element.text.strip()
+                sanitized_title = sanitize_filename(content_text)
 
             # Save data to Markdown file
             # 1. Check if the file already exists
-            filename = os.path.join(folder_name, f"{uuid}.md")
+            filename = os.path.join(folder_name, f"{sanitized_title}.md")
             if os.path.exists(filename):
                 # 1.a. Read the existing file's content
                 with open(filename, 'r', encoding='utf-8') as existing_file:
@@ -96,12 +110,16 @@ for line in sys.stdin:
                 sha256_existing = hashlib.sha256(extract_content_between_heading_and_uuid(existing_content).encode()).hexdigest()
                 sha256_new = hashlib.sha256(target_text.encode()).hexdigest()
                 if sha256_existing != sha256_new:
-                    # 1.c. Update file name appending suffix (1) 
-                    filename = os.path.join(folder_name, f"{uuid} (1).md")
+                    # 1.c. Update file name appending suffix (1), (2) and so on with counter
+                    counter = 1
+                    new_filename = sanitized_title + ".md"
+                    while os.path.exists(os.path.join(folder_name, new_filename)):
+                        new_filename = f"{sanitized_title} ({counter}).md"
+                        counter += 1
                     write_md_file(filename, uuid, title, author, content_text, target_text)
 
             else:
-                filename = os.path.join(folder_name, f"{uuid}.md")
+                filename = os.path.join(folder_name, f"{sanitized_title}.md")
                 write_md_file(filename, uuid, title, author, content_text, target_text)
      
 
