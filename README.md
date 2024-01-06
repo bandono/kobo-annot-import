@@ -4,10 +4,10 @@ This Python script uses combination of `find`,`rsync`, and `grep` to extract the
 
 I'm using Mac OSX so, plugging my [Kobo Clara HD](https://gl.kobobooks.com/products/kobo-clara-hd) will mount it to `/Volumes/KOBOeReader`. I use one line where:
 
-1. I change dir to the e-Reader
-2. Find annotation files
+1. I change dir to the e-Reader (`cd`)
+2. `find` annotation files
 3. Compare those files whether they are newer or the same with the ones kept on my laptop
-4. Copy only newer files to my laptop
+4. Copy only newer files to my laptop (`rsync`)
 5. Pipe the list of these newer files for processing the XML into individual markdown files
 
 
