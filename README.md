@@ -1,6 +1,6 @@
-With [Kobo e-Reader](https://en.wikipedia.org/wiki/Kobo_eReader) we can highlight [EPUB](https://en.wikipedia.org/wiki/EPUB) book as annotation that will be kept in the reader storage as XML files. Each annotation will have UUID assigned to it. One XML file will contain multiple UUIDs for the annotated parts of the EPUB book.
+With [Kobo e-Reader](https://en.wikipedia.org/wiki/Kobo_eReader) we can highlight [EPUB](https://en.wikipedia.org/wiki/EPUB) book as annotation that will be kept in the reader storage as XML files.
 
-This Python script uses combination of `find`,`rsync`, and `grep` to extract the annotations and save them as individual [Markdown](https://en.wikipedia.org/wiki/Markdown) file using the UUID for naming.
+This Python script uses combination of `find`,`rsync`, and `grep` to extract the annotations and save them as individual [Markdown](https://en.wikipedia.org/wiki/Markdown) file using the annotation text (in my case as sort of title) for naming.
 
 I'm using Mac OSX so, plugging my [Kobo Clara HD](https://gl.kobobooks.com/products/kobo-clara-hd) will mount it to `/Volumes/KOBOeReader`. I use one line where:
 
