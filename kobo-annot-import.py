@@ -28,7 +28,7 @@ def extract_content_between_heading_and_uuid(content):
 def write_md_file(filename, uuid, title, author, content_text, target_text):
         with open(filename, 'w', encoding='utf-8') as file:
             file.write(f"---\n")
-            file.write(f"type: book-annotation\n")
+            file.write(f"type: \n")
             file.write(f'''book-title: "{title}"\n''')
             file.write(f'''book-author: "{author}"\n''')
             file.write(f'''title: "{content_text}"\n\n''')
