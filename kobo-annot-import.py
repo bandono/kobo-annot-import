@@ -1,4 +1,4 @@
-# v2.0
+# v2.1
 # major change to use title as filename instead of UUID
 
 import sys
@@ -13,7 +13,7 @@ annot_file = ''
 # Define annotation folder
 annot_folder = '' # replace with annotation local folder
 # Define result folder root
-folder_name = 'result' # replace with target folder
+folder_name = '' # replace with target folder
 
 def extract_content_between_heading_and_uuid(content):
     # Extract content between heading and UUID using regular expressions
@@ -98,29 +98,29 @@ for line in sys.stdin:
                 content_text = content_text_element.text.strip()
                 sanitized_title = sanitize_filename(content_text)
 
-            # Save data to Markdown file
-            # 1. Check if the file already exists
-            filename = os.path.join(folder_name, f"{sanitized_title}.md")
-            if os.path.exists(filename):
-                # 1.a. Read the existing file's content
-                with open(filename, 'r', encoding='utf-8') as existing_file:
-                    existing_content = existing_file.read()
-                
-                # 1.b.Compare target text content only
-                sha256_existing = hashlib.sha256(extract_content_between_heading_and_uuid(existing_content).encode()).hexdigest()
-                sha256_new = hashlib.sha256(target_text.encode()).hexdigest()
-                if sha256_existing != sha256_new:
-                    # 1.c. Update file name appending suffix (1), (2) and so on with counter
-                    counter = 1
-                    new_filename = sanitized_title + ".md"
-                    while os.path.exists(os.path.join(folder_name, new_filename)):
-                        new_filename = f"{sanitized_title} ({counter}).md"
-                        counter += 1
-                    write_md_file(filename, uuid, title, author, content_text, target_text)
-
-            else:
+                # Save data to Markdown file
+                # 1. Check if the file already exists
                 filename = os.path.join(folder_name, f"{sanitized_title}.md")
-                write_md_file(filename, uuid, title, author, content_text, target_text)
+                if os.path.exists(filename):
+                    # 1.a. Read the existing file's content
+                    with open(filename, 'r', encoding='utf-8') as existing_file:
+                        existing_content = existing_file.read()
+                    
+                    # 1.b.Compare target text content only
+                    sha256_existing = hashlib.sha256(extract_content_between_heading_and_uuid(existing_content).encode()).hexdigest()
+                    sha256_new = hashlib.sha256(target_text.encode()).hexdigest()
+                    if sha256_existing != sha256_new:
+                        # 1.c. Update file name appending suffix (1), (2) and so on with counter
+                        counter = 1
+                        new_filename = sanitized_title + ".md"
+                        while os.path.exists(os.path.join(folder_name, new_filename)):
+                            new_filename = f"{sanitized_title} ({counter}).md"
+                            counter += 1
+                        write_md_file(filename, uuid, title, author, content_text, target_text)
+
+                else:
+                    filename = os.path.join(folder_name, f"{sanitized_title}.md")
+                    write_md_file(filename, uuid, title, author, content_text, target_text)
      
 
 
