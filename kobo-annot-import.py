@@ -1,4 +1,4 @@
-# v2.1
+# v2.2
 # major change to use title as filename instead of UUID
 
 import sys
@@ -116,7 +116,7 @@ for line in sys.stdin:
                         while os.path.exists(os.path.join(folder_name, new_filename)):
                             new_filename = f"{sanitized_title} ({counter}).md"
                             counter += 1
-                        write_md_file(filename, uuid, title, author, content_text, target_text)
+                        write_md_file(os.path.join(folder_name, new_filename), uuid, title, author, content_text, target_text)
 
                 else:
                     filename = os.path.join(folder_name, f"{sanitized_title}.md")
